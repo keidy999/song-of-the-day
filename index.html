@@ -31,7 +31,7 @@ body {
 #step3.active {
   display: flex !important;
   flex-direction: column;
-  min-height: calc(100dvh - 40px);
+  height: calc(100dvh - 40px);
   animation: up .4s cubic-bezier(.4,0,.2,1) both;
 }
 @keyframes up { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
@@ -230,11 +230,6 @@ input.shake { animation:shake .3s; border-color:#E84848!important; }
 
   <!-- STEP 1 -->
   <div class="step active" id="step1">
-    <div class="brand">
-      <div class="brand-dot"></div>
-      <span class="brand-name">Sound Republica</span>
-      <div class="brand-dot"></div>
-    </div>
     <label class="input-label" for="nicknameInput">닉네임을 입력해주세요</label>
     <input type="text" id="nicknameInput" placeholder="이름 또는 닉네임" maxlength="20"
            onkeydown="if(event.key==='Enter') goStep2()">
@@ -243,11 +238,6 @@ input.shake { animation:shake .3s; border-color:#E84848!important; }
 
   <!-- STEP 2 -->
   <div class="step" id="step2">
-    <div class="brand" style="margin-bottom:24px">
-      <div class="brand-dot"></div>
-      <span class="brand-name">Sound Republica</span>
-      <div class="brand-dot"></div>
-    </div>
     <div id="step2Content"></div>
   </div>
 
