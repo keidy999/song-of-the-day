@@ -219,7 +219,7 @@ input.shake { animation:shake .3s; border-color:#E84848!important; }
   <div class="s-title">🎵 곡 목록 관리</div>
   <div class="s-body">
     시트의 <b>컬러</b> 컬럼에 색상명을 입력하세요.<br>
-    <span style="opacity:.7">예: 빨강 / 파랑 / 초록 / 보라 / 분홍 / 주황 / 노랑 / 무채색</span><br><br>
+    <span style="opacity:.7">예: 빨강 / 파랑 / 초록 / 보라 / 갈색 / 주황 / 노랑 / 무채색</span><br><br>
     시트를 <b>"링크가 있는 모든 사용자 → 뷰어"</b>로 공개하면 저장 즉시 반영돼요.<br><br>
     이 버튼은 URL에 <b>?admin=1</b>이 있을 때만 표시돼요.
   </div>
@@ -276,7 +276,7 @@ const SHEET_ID = '1Rk-pqapYhpD7KQMsU3P4f4XOYeKqMNxhB_0H19UZzbg';
 const CSV_URL  = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=0`;
 
 // ── Color palette (8 colors, 45° each in ring) ────────────────
-const COLOR_ORDER = ['빨강','주황','노랑','초록','파랑','보라','분홍','무채색'];
+const COLOR_ORDER = ['빨강','주황','노랑','초록','파랑','보라','갈색','무채색'];
 const COLORS = {
   '빨강':   { hex:'#D63030', bg:'#FFF4F4' },
   '주황':   { hex:'#E07020', bg:'#FFF8F0' },
@@ -284,12 +284,12 @@ const COLORS = {
   '초록':   { hex:'#38A060', bg:'#F3FBF5' },
   '파랑':   { hex:'#3060C8', bg:'#F3F7FF' },
   '보라':   { hex:'#7840C0', bg:'#F8F3FF' },
-  '분홍':   { hex:'#D840A0', bg:'#FFF3FB' },
+  '갈색':   { hex:'#8B5A2B', bg:'#FDF6F0' },
   '무채색': { hex:'#707070', bg:'#F5F5F5' },
   // 구 컬러명 하위 호환
   '레드':'빨강',   '오렌지':'주황', '옐로우':'노랑',
   '그린':'초록',   '블루':'파랑',   '퍼플':'보라',
-  '핑크':'분홍',   '블랙':'무채색', '화이트':'무채색',
+  '브라운':'갈색',   '블랙':'무채색', '화이트':'무채색',
   '민트':'초록',   '브라운':'무채색', '검정':'무채색', '백':'무채색',
   // 구 무드값
   '비':'파랑', '행운':'초록', '위로':'보라', '화창':'노랑',
