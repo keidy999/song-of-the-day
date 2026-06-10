@@ -18,15 +18,22 @@
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
   background: var(--bg);
-  min-height: 100vh;
+  height: 100vh; height: 100dvh;
+  overflow: hidden;
   display: flex; align-items: center; justify-content: center;
-  padding: 32px 24px;
+  padding: 20px 24px;
   transition: background 0.5s ease;
 }
 .app { width: 100%; max-width: 380px; }
 
 .step { display: none; }
 .step.active { display: block; animation: up .4s cubic-bezier(.4,0,.2,1) both; }
+#step3.active {
+  display: flex !important;
+  flex-direction: column;
+  min-height: calc(100dvh - 40px);
+  animation: up .4s cubic-bezier(.4,0,.2,1) both;
+}
 @keyframes up { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
 
 /* Brand */
@@ -125,43 +132,43 @@ input.shake { animation:shake .3s; border-color:#E84848!important; }
 .spin-label { font-size:13px; color:var(--text-muted); }
 
 /* Step 3 */
-.rec-top { text-align:center; margin-bottom:16px; }
+.rec-top { text-align:center; margin-bottom:10px; }
 .rec-badge { display:inline-block; padding:6px 16px; border-radius:99px; font-size:12px; font-weight:700; letter-spacing:.02em; }
-.cover-wrap { display:flex; justify-content:center; margin-bottom:22px; }
-.cover-box { width:210px; height:210px; border-radius:20px; box-shadow:0 14px 44px rgba(0,0,0,.18); overflow:hidden; position:relative; flex-shrink:0; }
+.cover-wrap { display:flex; justify-content:center; margin-bottom:16px; }
+.cover-box { width:185px; height:185px; border-radius:18px; box-shadow:0 12px 36px rgba(0,0,0,.18); overflow:hidden; position:relative; flex-shrink:0; }
 .cover-box img { width:100%; height:100%; object-fit:cover; display:block; }
 .cover-fallback { width:100%; height:100%; display:flex; align-items:center; justify-content:center; }
 .cover-initial { font-size:74px; font-weight:900; color:rgba(255,255,255,.82); letter-spacing:-3px; text-shadow:0 4px 12px rgba(0,0,0,.12); }
-.song-meta { text-align:center; margin-bottom:18px; }
-.song-artist { font-size:14px; font-weight:600; color:var(--text-muted); letter-spacing:.03em; margin-bottom:7px; }
-.song-title  { font-size:22px; font-weight:600; color:var(--text); line-height:1.3; }
+.song-meta { text-align:center; margin-bottom:0; }
+.song-artist { font-size:13px; font-weight:600; color:var(--text-muted); letter-spacing:.03em; margin-bottom:6px; }
+.song-title  { font-size:20px; font-weight:600; color:var(--text); line-height:1.3; }
 .comment-wrap {
   position: relative;
-  margin-bottom: 28px;
-  padding: 14px 32px 10px;
+  margin-bottom: 16px;
+  padding: 10px 28px 8px;
   text-align: center;
 }
 .comment-wrap::before {
   content: '\201C';
   position: absolute;
-  top: -6px; left: 10px;
-  font-size: 56px; line-height: 1;
+  top: 0px; left: 8px;
+  font-size: 40px; line-height: 1;
   color: var(--accent);
-  opacity: 0.25;
+  opacity: 0.28;
   font-family: Georgia, serif;
 }
 .comment-wrap::after {
   content: '\201D';
   position: absolute;
-  bottom: -24px; right: 10px;
-  font-size: 56px; line-height: 1;
+  bottom: -16px; right: 8px;
+  font-size: 40px; line-height: 1;
   color: var(--accent);
-  opacity: 0.25;
+  opacity: 0.28;
   font-family: Georgia, serif;
 }
-.comment-text { font-size:14px; font-weight:300; line-height:1.9; color:#222; text-align:center; letter-spacing:.01em; }
+.comment-text { font-size:12.5px; font-weight:400; line-height:1.75; color:#888; text-align:center; letter-spacing:.01em; }
 
-.btn-row { display:flex; gap:10px; margin-bottom:10px; }
+.btn-row { display:flex; gap:10px; margin-top:auto; padding-top:14px; margin-bottom:0; }
 .btn-shuffle {
   flex:1; padding:14px; font-size:13px; font-weight:700; font-family:inherit;
   color:var(--accent); background:color-mix(in srgb, var(--accent) 8%, transparent);
