@@ -125,9 +125,9 @@ input.shake { animation:shake .3s; border-color:#E84848!important; }
 .spin-label { font-size:13px; color:var(--text-muted); }
 
 /* Step 3 */
-.rec-top { text-align:center; margin-bottom:24px; }
+.rec-top { text-align:center; margin-bottom:16px; }
 .rec-badge { display:inline-block; padding:6px 16px; border-radius:99px; font-size:12px; font-weight:700; letter-spacing:.02em; }
-.cover-wrap { display:flex; justify-content:center; margin-bottom:24px; }
+.cover-wrap { display:flex; justify-content:center; margin-bottom:22px; }
 .cover-box { width:210px; height:210px; border-radius:20px; box-shadow:0 14px 44px rgba(0,0,0,.18); overflow:hidden; position:relative; flex-shrink:0; }
 .cover-box img { width:100%; height:100%; object-fit:cover; display:block; }
 .cover-fallback { width:100%; height:100%; display:flex; align-items:center; justify-content:center; }
@@ -138,28 +138,28 @@ input.shake { animation:shake .3s; border-color:#E84848!important; }
 .comment-wrap {
   position: relative;
   margin-bottom: 28px;
-  padding: 0 8px;
+  padding: 14px 32px 10px;
   text-align: center;
 }
 .comment-wrap::before {
   content: '\201C';
   position: absolute;
-  top: -14px; left: 4px;
-  font-size: 52px; line-height: 1;
+  top: -6px; left: 10px;
+  font-size: 56px; line-height: 1;
   color: var(--accent);
-  opacity: 0.22;
+  opacity: 0.25;
   font-family: Georgia, serif;
 }
 .comment-wrap::after {
   content: '\201D';
   position: absolute;
-  bottom: -28px; right: 4px;
-  font-size: 52px; line-height: 1;
+  bottom: -24px; right: 10px;
+  font-size: 56px; line-height: 1;
   color: var(--accent);
-  opacity: 0.22;
+  opacity: 0.25;
   font-family: Georgia, serif;
 }
-.comment-text { font-size:14px; line-height:1.85; color:var(--text-muted); text-align:center; padding: 0 20px; }
+.comment-text { font-size:14px; font-weight:300; line-height:1.9; color:#222; text-align:center; letter-spacing:.01em; }
 
 .btn-row { display:flex; gap:10px; margin-bottom:10px; }
 .btn-shuffle {
@@ -248,6 +248,9 @@ input.shake { animation:shake .3s; border-color:#E84848!important; }
     <div class="rec-top">
       <div class="rec-badge" id="recBadge"></div>
     </div>
+    <div class="comment-wrap" id="commentWrap">
+      <div class="comment-text" id="commentText"></div>
+    </div>
     <div class="cover-wrap">
       <div class="cover-box" id="coverBox">
         <div class="cover-fallback" id="coverFallback">
@@ -258,9 +261,6 @@ input.shake { animation:shake .3s; border-color:#E84848!important; }
     <div class="song-meta">
       <div class="song-artist" id="songArtist"></div>
       <div class="song-title"  id="songTitle"></div>
-    </div>
-    <div class="comment-wrap" id="commentWrap">
-      <div class="comment-text" id="commentText"></div>
     </div>
     <div class="btn-row">
       <button class="btn-shuffle" onclick="nextSong()">🔀 다른 곡</button>
@@ -553,14 +553,24 @@ function today() {
   return `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
 }
 function particle(n) {
-  const c = n[n.length-1].charCodeAt(0);
-  if (c < 0xAC00 || c > 0xD7A3) return '야';
-  return (c-0xAC00) % 28 === 0 ? '야' : '이야';
+  const ch = n[n.length-1];
+  const code = ch.charCodeAt(0);
+  if (code >= 0xAC00 && code <= 0xD7A3) return (code-0xAC00)%28===0 ? '야' : '이야';
+  // 숫자 받침 여부
+  const numCoda = {'0':true,'1':true,'3':true,'6':true,'7':true,'8':true};
+  if (numCoda[ch] !== undefined) return numCoda[ch] ? '이야' : '야';
+  // 영문: 모음 끝 → 야, 자음 끝 → 이야
+  return 'aeiouAEIOU'.includes(ch) ? '야' : '이야';
 }
 function nameParticle(n) {
-  const c = n[n.length-1].charCodeAt(0);
-  if (c < 0xAC00 || c > 0xD7A3) return '을/를';
-  return (c-0xAC00) % 28 === 0 ? '를' : '을';
+  const ch = n[n.length-1];
+  const code = ch.charCodeAt(0);
+  if (code >= 0xAC00 && code <= 0xD7A3) return (code-0xAC00)%28===0 ? '를' : '을';
+  // 숫자 받침 여부
+  const numCoda = {'0':true,'1':true,'3':true,'6':true,'7':true,'8':true};
+  if (numCoda[ch] !== undefined) return numCoda[ch] ? '을' : '를';
+  // 영문: 모음 끝 → 를, 자음 끝 → 을
+  return 'aeiouAEIOU'.includes(ch) ? '를' : '을';
 }
 function setTheme(hex, bg) {
   document.documentElement.style.setProperty('--accent', hex);
