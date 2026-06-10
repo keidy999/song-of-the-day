@@ -168,7 +168,8 @@ input.shake { animation:shake .3s; border-color:#E84848!important; }
 }
 .comment-text { font-size:12.5px; font-weight:400; line-height:1.75; color:#888; text-align:center; letter-spacing:.01em; }
 
-.btn-row { display:flex; gap:10px; margin-top:auto; padding-top:14px; margin-bottom:0; }
+.rec-content { flex:1; display:flex; flex-direction:column; justify-content:center; }
+.btn-row { display:flex; gap:10px; padding-top:14px; padding-bottom:4px; }
 .btn-shuffle {
   flex:1; padding:14px; font-size:13px; font-weight:700; font-family:inherit;
   color:var(--accent); background:color-mix(in srgb, var(--accent) 8%, transparent);
@@ -252,22 +253,24 @@ input.shake { animation:shake .3s; border-color:#E84848!important; }
 
   <!-- STEP 3 -->
   <div class="step" id="step3">
-    <div class="rec-top">
-      <div class="rec-badge" id="recBadge"></div>
-    </div>
-    <div class="comment-wrap" id="commentWrap">
-      <div class="comment-text" id="commentText"></div>
-    </div>
-    <div class="cover-wrap">
-      <div class="cover-box" id="coverBox">
-        <div class="cover-fallback" id="coverFallback">
-          <span class="cover-initial" id="coverInitial"></span>
+    <div class="rec-content">
+      <div class="rec-top">
+        <div class="rec-badge" id="recBadge"></div>
+      </div>
+      <div class="comment-wrap" id="commentWrap">
+        <div class="comment-text" id="commentText"></div>
+      </div>
+      <div class="cover-wrap">
+        <div class="cover-box" id="coverBox">
+          <div class="cover-fallback" id="coverFallback">
+            <span class="cover-initial" id="coverInitial"></span>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="song-meta">
-      <div class="song-artist" id="songArtist"></div>
-      <div class="song-title"  id="songTitle"></div>
+      <div class="song-meta">
+        <div class="song-artist" id="songArtist"></div>
+        <div class="song-title"  id="songTitle"></div>
+      </div>
     </div>
     <div class="btn-row">
       <button class="btn-shuffle" onclick="nextSong()">🔀 다른 곡</button>
