@@ -162,7 +162,6 @@ input.shake { animation:shake .3s; border-color:#E84848!important; }
   <div class="step" id="step3">
     <div class="rec-top">
       <div class="rec-badge" id="recBadge"></div>
-      <div class="rec-for" id="recFor"></div>
     </div>
     <div class="cover-wrap">
       <div class="cover-box" id="coverBox">
@@ -394,7 +393,6 @@ function renderSong() {
   document.getElementById('recBadge').textContent = currentColor.toUpperCase();
   document.getElementById('recBadge').style.cssText =
     `background:${cfg.hex}18;color:${cfg.hex};padding:4px 12px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.06em;margin-bottom:10px;display:inline-block`;
-  document.getElementById('recFor').textContent = `${nickname}${nameParticle(nickname)} 위한 오늘의 추천곡`;
 
   const box      = document.getElementById('coverBox');
   const fallback = document.getElementById('coverFallback');
