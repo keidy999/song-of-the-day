@@ -30,7 +30,7 @@ body {
 @keyframes up { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
 
 /* Brand */
-.brand { display:flex; align-items:center; justify-content:center; gap:8px; margin-bottom:56px; }
+.brand { display:flex; align-items:center; justify-content:center; gap:8px; margin-bottom:48px; }
 .brand-dot { width:7px; height:7px; border-radius:50%; background:var(--accent); }
 .brand-name { font-size:10px; font-weight:700; letter-spacing:.16em; color:var(--text-muted); text-transform:uppercase; }
 
@@ -54,47 +54,117 @@ input.shake { animation:shake .3s; border-color:#E84848!important; }
 .btn-go:hover { transform:translateY(-2px); box-shadow:0 6px 20px color-mix(in srgb, var(--accent) 35%, transparent); }
 .btn-go:active { transform:none; }
 
-/* Step 2 */
-.color-headline { text-align:center; margin-bottom:40px; }
-.color-pre { font-size:15px; font-weight:400; color:var(--text-muted); margin-bottom:6px; }
-.color-word { font-size:40px; font-weight:800; line-height:1; min-height:48px; transition:color .2s, opacity .2s; color:var(--text); opacity:.15; display:inline; }
-.color-word.active { opacity:1; }
-.color-suffix { font-size:26px; font-weight:700; color:var(--text-muted); transition:opacity .2s; opacity:0; display:inline; }
-.color-suffix.active { opacity:1; }
-.swatch-grid { display:flex; flex-wrap:wrap; gap:20px; justify-content:center; }
-.swatch-item { display:flex; flex-direction:column; align-items:center; gap:8px; cursor:pointer; transition:transform .18s; -webkit-tap-highlight-color:transparent; }
-.swatch-item:hover { transform:translateY(-3px); }
-.swatch-item:active { transform:none; }
-.swatch-circle { width:60px; height:60px; border-radius:50%; box-shadow:0 3px 12px rgba(0,0,0,.14); transition:box-shadow .2s; position:relative; }
-.swatch-item.selected .swatch-circle { outline:3px solid var(--text); outline-offset:4px; }
-.swatch-item.selected .swatch-circle::after { content:'✓'; position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:22px; color:rgba(255,255,255,.9); }
-.swatch-label { font-size:11px; font-weight:700; color:var(--text-muted); letter-spacing:.05em; }
-
-/* Loading overlay on step 2 */
-.loading-overlay {
-  text-align:center; padding:40px 0;
+/* Step 2 – circular ring */
+.color-ring {
+  position: relative;
+  width: 300px; height: 300px;
+  margin: 0 auto;
 }
+.ring-center {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  pointer-events: none;
+  z-index: 2;
+  width: 116px;
+}
+.center-pre {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+.center-color {
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 1.1;
+  min-height: 30px;
+  transition: color .2s, opacity .2s;
+  opacity: 0.1;
+  color: var(--text);
+}
+.center-color.active { opacity: 1; }
+.center-suffix {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-muted);
+  opacity: 0;
+  transition: opacity .2s;
+}
+.center-suffix.active { opacity: 1; }
+
+.swatch-item {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  z-index: 1;
+}
+.swatch-inner { transition: transform .18s; }
+.swatch-item:hover  .swatch-inner { transform: scale(1.14); }
+.swatch-item:active .swatch-inner { transform: scale(.95); }
+.swatch-item.selected .swatch-inner { transform: scale(1.08); }
+.swatch-item.empty { opacity: 0.22; cursor: not-allowed; pointer-events: none; }
+.swatch-circle {
+  width: 52px; height: 52px; border-radius: 50%;
+  box-shadow: 0 3px 12px rgba(0,0,0,.18);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10.5px; font-weight: 700;
+  letter-spacing: .02em;
+  transition: box-shadow .2s;
+}
+.swatch-item.selected .swatch-circle {
+  box-shadow: 0 0 0 3px var(--accent), 0 4px 14px rgba(0,0,0,.2);
+}
+
+/* Loading */
+.loading-overlay { text-align:center; padding:60px 0; }
 .spin { width:32px; height:32px; border:3px solid var(--border); border-top-color:var(--accent); border-radius:50%; animation:spin .7s linear infinite; margin:0 auto 12px; }
 @keyframes spin { to { transform:rotate(360deg); } }
 .spin-label { font-size:13px; color:var(--text-muted); }
 
 /* Step 3 */
-.rec-top { text-align:center; margin-bottom:28px; }
-.rec-badge { display:inline-block; padding:4px 12px; border-radius:99px; font-size:11px; font-weight:700; letter-spacing:.06em; margin-bottom:10px; }
-.rec-for { font-size:16px; font-weight:800; color:var(--text); line-height:1.4; }
-.cover-wrap { display:flex; justify-content:center; margin-bottom:26px; }
+.rec-top { text-align:center; margin-bottom:24px; }
+.rec-badge { display:inline-block; padding:6px 16px; border-radius:99px; font-size:12px; font-weight:700; letter-spacing:.02em; }
+.cover-wrap { display:flex; justify-content:center; margin-bottom:24px; }
 .cover-box { width:210px; height:210px; border-radius:20px; box-shadow:0 14px 44px rgba(0,0,0,.18); overflow:hidden; position:relative; flex-shrink:0; }
 .cover-box img { width:100%; height:100%; object-fit:cover; display:block; }
 .cover-fallback { width:100%; height:100%; display:flex; align-items:center; justify-content:center; }
 .cover-initial { font-size:74px; font-weight:900; color:rgba(255,255,255,.82); letter-spacing:-3px; text-shadow:0 4px 12px rgba(0,0,0,.12); }
 .song-meta { text-align:center; margin-bottom:18px; }
 .song-artist { font-size:12px; font-weight:500; color:var(--text-muted); letter-spacing:.04em; margin-bottom:6px; }
-.song-title { font-size:23px; font-weight:800; color:var(--text); line-height:1.2; }
-.comment-wrap { display:flex; gap:11px; background:var(--card); border-radius:13px; padding:14px 16px; box-shadow:0 2px 8px rgba(0,0,0,.05); margin-bottom:24px; }
-.comment-line { width:3px; border-radius:99px; background:var(--accent); flex-shrink:0; }
-.comment-text { font-size:13px; line-height:1.75; color:var(--text-muted); font-style:italic; }
-.btn-shuffle { width:100%; padding:14px; font-size:14px; font-weight:700; font-family:inherit; color:var(--accent); background:color-mix(in srgb, var(--accent) 8%, transparent); border:1.5px solid color-mix(in srgb, var(--accent) 30%, transparent); border-radius:13px; cursor:pointer; margin-bottom:10px; transition:background .2s, transform .12s; }
+.song-title  { font-size:23px; font-weight:800; color:var(--text); line-height:1.2; }
+.comment-wrap {
+  background: var(--card);
+  border-radius: 13px;
+  padding: 16px 18px;
+  border-top: 3px solid var(--accent);
+  box-shadow: 0 2px 8px rgba(0,0,0,.05);
+  margin-bottom: 24px;
+}
+.comment-text { font-size:13px; line-height:1.8; color:var(--text-muted); text-align:center; }
+
+.btn-shuffle {
+  width:100%; padding:14px; font-size:14px; font-weight:700; font-family:inherit;
+  color:var(--accent); background:color-mix(in srgb, var(--accent) 8%, transparent);
+  border:1.5px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  border-radius:13px; cursor:pointer; margin-bottom:8px;
+  transition:background .2s, transform .12s;
+}
 .btn-shuffle:hover { background:color-mix(in srgb, var(--accent) 14%, transparent); transform:translateY(-1px); }
+
+.btn-save {
+  width:100%; padding:13px; font-size:13px; font-weight:600; font-family:inherit;
+  color:var(--text-muted); background:var(--card);
+  border:1.5px solid var(--border);
+  border-radius:13px; cursor:pointer; margin-bottom:8px;
+  transition:background .2s, color .2s, transform .12s;
+  display:flex; align-items:center; justify-content:center; gap:6px;
+}
+.btn-save:hover { background:var(--bg); color:var(--text); transform:translateY(-1px); }
+.btn-save:disabled { opacity:.5; cursor:not-allowed; transform:none; }
+
 .btn-back { width:100%; padding:11px; font-size:13px; font-family:inherit; color:var(--text-muted); background:transparent; border:none; cursor:pointer; transition:color .2s; }
 .btn-back:hover { color:var(--text); }
 
@@ -116,7 +186,7 @@ input.shake { animation:shake .3s; border-color:#E84848!important; }
 }
 .settings-drawer.open { display:block; }
 .s-title { font-size:12px; font-weight:700; color:var(--text); margin-bottom:8px; }
-.s-body { font-size:11px; color:var(--text-muted); line-height:1.65; }
+.s-body  { font-size:11px; color:var(--text-muted); line-height:1.65; }
 .s-body b { color:var(--text); }
 .s-status { font-size:11px; color:var(--text-muted); margin-top:10px; padding-top:10px; border-top:1px solid var(--border); }
 </style>
@@ -129,7 +199,7 @@ input.shake { animation:shake .3s; border-color:#E84848!important; }
   <div class="s-title">🎵 곡 목록 관리</div>
   <div class="s-body">
     시트의 <b>컬러</b> 컬럼에 색상명을 입력하세요.<br>
-    <span style="opacity:.7">예: 레드 / 블루 / 그린 / 퍼플 / 핑크 / 옐로우 / 블랙 / 오렌지</span><br><br>
+    <span style="opacity:.7">예: 빨강 / 파랑 / 초록 / 보라 / 분홍 / 주황 / 노랑 / 무채색</span><br><br>
     시트를 <b>"링크가 있는 모든 사용자 → 뷰어"</b>로 공개하면 저장 즉시 반영돼요.<br><br>
     이 버튼은 URL에 <b>?admin=1</b>이 있을 때만 표시돼요.
   </div>
@@ -153,9 +223,12 @@ input.shake { animation:shake .3s; border-color:#E84848!important; }
 
   <!-- STEP 2 -->
   <div class="step" id="step2">
-    <div id="step2Content">
-      <!-- loading or color picker, filled by JS -->
+    <div class="brand" style="margin-bottom:24px">
+      <div class="brand-dot"></div>
+      <span class="brand-name">Sound Republica</span>
+      <div class="brand-dot"></div>
     </div>
+    <div id="step2Content"></div>
   </div>
 
   <!-- STEP 3 -->
@@ -174,45 +247,61 @@ input.shake { animation:shake .3s; border-color:#E84848!important; }
       <div class="song-artist" id="songArtist"></div>
       <div class="song-title"  id="songTitle"></div>
     </div>
-    <div class="comment-wrap">
-      <div class="comment-line" id="commentLine"></div>
+    <div class="comment-wrap" id="commentWrap">
       <div class="comment-text" id="commentText"></div>
     </div>
     <button class="btn-shuffle" onclick="nextSong()">🔀 다른 곡 추천받기</button>
-    <button class="btn-back"    onclick="goStep2()">← 컬러 다시 고르기</button>
+    <button class="btn-save" id="btnSave" onclick="saveAsImage()">
+      <span>📷</span><span id="saveLabel">이미지로 저장</span>
+    </button>
+    <button class="btn-back" onclick="goStep2()">← 컬러 다시 고르기</button>
   </div>
 
 </div>
 
 <script>
 // ── Config ────────────────────────────────────────────────────
-const SHEET_ID  = '1Rk-pqapYhpD7KQMsU3P4f4XOYeKqMNxhB_0H19UZzbg';
-const CSV_URL   = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=0`;
+const SHEET_ID = '1Rk-pqapYhpD7KQMsU3P4f4XOYeKqMNxhB_0H19UZzbg';
+const CSV_URL  = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=0`;
 
-// ── Color palette ─────────────────────────────────────────────
+// ── Color palette (8 colors, 45° each in ring) ────────────────
+const COLOR_ORDER = ['빨강','주황','노랑','초록','파랑','보라','분홍','무채색'];
 const COLORS = {
-  '레드':   { hex:'#D63030', bg:'#FFF4F4' },
-  '핑크':   { hex:'#D840A0', bg:'#FFF3FB' },
-  '오렌지': { hex:'#E07020', bg:'#FFF8F0' },
-  '옐로우': { hex:'#C8A020', bg:'#FFFBF0' },
-  '그린':   { hex:'#38A060', bg:'#F3FBF5' },
-  '민트':   { hex:'#30A898', bg:'#F3FBFA' },
-  '블루':   { hex:'#3060C8', bg:'#F3F7FF' },
-  '퍼플':   { hex:'#7840C0', bg:'#F8F3FF' },
-  '브라운': { hex:'#905040', bg:'#FBF6F4' },
-  '블랙':   { hex:'#1A1A1A', bg:'#F5F5F5' },
-  '화이트': { hex:'#9A9A9A', bg:'#F8F8F8' },
-  // 구 무드값 → 컬러 매핑 (하위 호환)
-  '비':     { hex:'#3060C8', bg:'#F3F7FF' },
-  '행운':   { hex:'#38A060', bg:'#F3FBF5' },
-  '위로':   { hex:'#7840C0', bg:'#F8F3FF' },
-  '화창':   { hex:'#C8A020', bg:'#FFFBF0' },
+  '빨강':   { hex:'#D63030', bg:'#FFF4F4' },
+  '주황':   { hex:'#E07020', bg:'#FFF8F0' },
+  '노랑':   { hex:'#D4A820', bg:'#FFFBF0' },
+  '초록':   { hex:'#38A060', bg:'#F3FBF5' },
+  '파랑':   { hex:'#3060C8', bg:'#F3F7FF' },
+  '보라':   { hex:'#7840C0', bg:'#F8F3FF' },
+  '분홍':   { hex:'#D840A0', bg:'#FFF3FB' },
+  '무채색': { hex:'#707070', bg:'#F5F5F5' },
+  // 구 컬러명 하위 호환
+  '레드':'빨강',   '오렌지':'주황', '옐로우':'노랑',
+  '그린':'초록',   '블루':'파랑',   '퍼플':'보라',
+  '핑크':'분홍',   '블랙':'무채색', '화이트':'무채색',
+  '민트':'초록',   '브라운':'무채색', '검정':'무채색', '백':'무채색',
+  // 구 무드값
+  '비':'파랑', '행운':'초록', '위로':'보라', '화창':'노랑',
 };
 
-// ── Song data (마지막 시트 동기화: 2026-06-10) ────────────────
+function resolveColor(raw) {
+  if (!raw) return null;
+  const v = COLORS[raw];
+  if (typeof v === 'string') return v;
+  if (v) return raw;
+  return null;
+}
+
+// ── Fallback song data ────────────────────────────────────────
 const FALLBACK = [
-  { artist:'윤준', title:'밑 빠진 나', coverUrl:'https://image.bugsm.co.kr/album/images/original/208060/20806057.jpg', color:'블루', comment:'빗소리처럼 자연스럽게 스며드는 곡이에요. 잠시 멍하니 들어보세요.', grad:['#6090D8','#2850A8'] },
-  { artist:'블낫블(blue is not blue)', title:'paradise', coverUrl:'https://image.bugsm.co.kr/album/images/original/207433/20743316.jpg', color:'블루', comment:'오늘은 왠지 좋은 일이 생길 것 같지 않나요? 이 곡이 그 시작이에요.', grad:['#6090D8','#2850A8'] },
+  { artist:'윤준', title:'밑 빠진 나',
+    coverUrl:'https://image.bugsm.co.kr/album/images/original/208060/20806057.jpg',
+    color:'파랑', comment:'빗소리처럼 자연스럽게 스며드는 곡이에요. 잠시 멍하니 들어보세요.',
+    grad:['#6090D8','#2850A8'] },
+  { artist:'블낫블(blue is not blue)', title:'paradise',
+    coverUrl:'https://image.bugsm.co.kr/album/images/original/207433/20743316.jpg',
+    color:'파랑', comment:'오늘은 왠지 좋은 일이 생길 것 같지 않나요? 이 곡이 그 시작이에요.',
+    grad:['#6090D8','#2850A8'] },
 ];
 
 // ── State ─────────────────────────────────────────────────────
@@ -220,17 +309,15 @@ let songs        = [];
 let songsReady   = false;
 let nickname     = '';
 let currentColor = '';
+let currentSong  = null;
 let songOffset   = 0;
 let settingsOpen = false;
 const IS_ADMIN   = new URLSearchParams(location.search).has('admin');
 
 // ── Init ──────────────────────────────────────────────────────
 if (IS_ADMIN) document.getElementById('gearBtn').classList.add('visible');
-
 const saved = localStorage.getItem('sr_nick');
 if (saved) document.getElementById('nicknameInput').value = saved;
-
-// Start fetching sheet in background immediately
 fetchSheet();
 
 // ── CSV fetch & parse ─────────────────────────────────────────
@@ -238,48 +325,46 @@ async function fetchSheet() {
   try {
     const res = await fetch(CSV_URL + `&_c=${new Date().toDateString()}`);
     if (!res.ok) throw new Error('fetch failed');
-    const text = await res.text();
+    const text  = await res.text();
     const parsed = parseCSV(text);
-    if (parsed.length > 0) {
-      songs = parsed;
-      if (IS_ADMIN) {
-        document.getElementById('syncStatus').textContent =
-          `마지막 동기화: ${new Date().toLocaleTimeString('ko-KR')} · ${songs.length}곡`;
-      }
-    } else {
-      songs = FALLBACK;
+    songs = parsed.length > 0 ? parsed : FALLBACK;
+    if (IS_ADMIN) {
+      document.getElementById('syncStatus').textContent =
+        `마지막 동기화: ${new Date().toLocaleTimeString('ko-KR')} · ${songs.length}곡`;
     }
   } catch {
     songs = FALLBACK;
   }
   songsReady = true;
-  // If user already got to step 2 while loading, render now
   if (document.getElementById('step2').classList.contains('active')) {
     renderColorPicker();
   }
 }
 
 function parseCSV(text) {
-  const rows = [];
+  const rows  = [];
   const lines = text.split('\n');
-  for (let i = 1; i < lines.length; i++) { // skip header
+  for (let i = 1; i < lines.length; i++) {
     const line = lines[i].trim();
     if (!line) continue;
     const cols = splitCSVLine(line);
     if (cols.length < 4) continue;
     const [artist, title, coverUrl, colorRaw, ...rest] = cols;
-    const comment = rest.join(',').trim();
     if (!artist || !title) continue;
-    const colorKey = Object.keys(COLORS).find(k => colorRaw.trim().includes(k)) || null;
+    const comment     = rest.join(',').trim();
+    const rawTrimmed  = colorRaw.trim();
+    const matchKey    = Object.keys(COLORS).find(k => rawTrimmed === k)
+                     || Object.keys(COLORS).find(k => rawTrimmed.includes(k));
+    const colorKey    = matchKey ? resolveColor(matchKey) : null;
     if (!colorKey) continue;
     const cfg = COLORS[colorKey];
     rows.push({
-      artist: artist.trim(),
-      title:  title.trim(),
+      artist:   artist.trim(),
+      title:    title.trim(),
       coverUrl: coverUrl.trim(),
-      color:   colorKey,
-      comment: comment || '이 곡을 들으며 잠시 쉬어가요.',
-      grad:    [cfg.hex, darken(cfg.hex)],
+      color:    colorKey,
+      comment:  comment || '이 곡을 들으며 잠시 쉬어가요.',
+      grad:     [cfg.hex, darken(cfg.hex)],
     });
   }
   return rows;
@@ -302,6 +387,14 @@ function darken(hex) {
   return `rgb(${[1,3,5].map(i => Math.max(0, parseInt(hex.slice(i,i+2),16)-55)).join(',')})`;
 }
 
+// ── Auto-contrast (white or black on given bg) ────────────────
+function autoTextColor(hex) {
+  const r = parseInt(hex.slice(1,3),16);
+  const g = parseInt(hex.slice(3,5),16);
+  const b = parseInt(hex.slice(5,7),16);
+  return (0.299*r + 0.587*g + 0.114*b) / 255 > 0.58 ? '#1A1A1A' : '#FFFFFF';
+}
+
 // ── Step 1 ────────────────────────────────────────────────────
 function goStep2() {
   const val = document.getElementById('nicknameInput').value.trim();
@@ -312,14 +405,14 @@ function goStep2() {
     inp.focus();
     return;
   }
-  nickname = val;
-  localStorage.setItem('sr_nick', val);
+  nickname     = val;
   currentColor = '';
   songOffset   = 0;
+  currentSong  = null;
+  localStorage.setItem('sr_nick', val);
   showStep('step2');
 
   if (!songsReady) {
-    // Show spinner while waiting
     document.getElementById('step2Content').innerHTML = `
       <div class="loading-overlay">
         <div class="spin"></div>
@@ -330,30 +423,42 @@ function goStep2() {
   }
 }
 
-// ── Step 2 – color picker ─────────────────────────────────────
+// ── Step 2 – circular color ring ─────────────────────────────
 function renderColorPicker() {
-  const available = [...new Set(songs.map(s => s.color))];
-  const html = `
-    <div class="color-headline">
-      <div class="color-pre">오늘은 왠지</div>
-      <div>
-        <span class="color-word" id="colorWord">—</span><span class="color-suffix" id="colorSuffix"></span>
+  const available = new Set(songs.map(s => s.color));
+  const n  = COLOR_ORDER.length; // 8 → 45° each
+  const R  = 108;                // radius px
+  const CX = 150, CY = 150;     // center of 300×300 container
+
+  const swatches = COLOR_ORDER.map((c, i) => {
+    const angle    = -Math.PI / 2 + i * (2 * Math.PI / n);
+    const x        = CX + R * Math.cos(angle);
+    const y        = CY + R * Math.sin(angle);
+    const cfg      = COLORS[c] || { hex:'#888' };
+    const hasSongs = available.has(c);
+    const txtColor = autoTextColor(cfg.hex);
+    return `
+      <div class="swatch-item${hasSongs ? '' : ' empty'}"
+           style="left:${x.toFixed(1)}px;top:${y.toFixed(1)}px"
+           ${hasSongs ? `onclick="pickColor('${c}',this)"
+             onmouseenter="hoverColor('${c}')"
+             onmouseleave="unhoverColor()"` : ''}>
+        <div class="swatch-inner">
+          <div class="swatch-circle"
+               style="background:${cfg.hex};color:${txtColor}">${c}</div>
+        </div>
+      </div>`;
+  }).join('');
+
+  document.getElementById('step2Content').innerHTML = `
+    <div class="color-ring">
+      <div class="ring-center">
+        <div class="center-pre">오늘은 왠지</div>
+        <div class="center-color" id="colorWord"></div>
+        <div class="center-suffix" id="colorSuffix"></div>
       </div>
-    </div>
-    <div class="swatch-grid" id="swatchGrid">
-      ${available.map(c => {
-        const cfg = COLORS[c] || { hex:'#888' };
-        return `
-          <div class="swatch-item" data-color="${c}"
-               onclick="pickColor('${c}', this)"
-               onmouseenter="hoverColor('${c}')"
-               onmouseleave="unhoverColor()">
-            <div class="swatch-circle" style="background:${cfg.hex}"></div>
-            <div class="swatch-label">${c.toUpperCase()}</div>
-          </div>`;
-      }).join('')}
+      ${swatches}
     </div>`;
-  document.getElementById('step2Content').innerHTML = html;
 }
 
 function hoverColor(c) {
@@ -369,7 +474,7 @@ function unhoverColor() {
   const w = document.getElementById('colorWord');
   const s = document.getElementById('colorSuffix');
   if (!w) return;
-  w.textContent = '—'; w.style.color = ''; w.classList.remove('active');
+  w.textContent = ''; w.style.color = ''; w.classList.remove('active');
   s.textContent = ''; s.classList.remove('active');
 }
 function pickColor(c, card) {
@@ -388,12 +493,16 @@ function renderSong() {
   if (!pool.length) return;
   const idx  = hash(nickname + today() + currentColor + songOffset) % pool.length;
   const song = pool[idx];
-  const cfg  = COLORS[currentColor] || { hex:'#888' };
+  currentSong  = song;
+  const cfg    = COLORS[currentColor] || { hex:'#888' };
 
-  document.getElementById('recBadge').textContent = currentColor.toUpperCase();
-  document.getElementById('recBadge').style.cssText =
-    `background:${cfg.hex}18;color:${cfg.hex};padding:4px 12px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.06em;margin-bottom:10px;display:inline-block`;
+  // Badge: "[닉네임]을 위한 [컬러]" on solid color bg
+  const badge = document.getElementById('recBadge');
+  badge.textContent     = `${nickname}${nameParticle(nickname)} 위한 ${currentColor}`;
+  badge.style.background = cfg.hex;
+  badge.style.color      = autoTextColor(cfg.hex);
 
+  // Cover
   const box      = document.getElementById('coverBox');
   const fallback = document.getElementById('coverFallback');
   const initial  = document.getElementById('coverInitial');
@@ -413,14 +522,178 @@ function renderSong() {
     box.appendChild(img);
   }
 
-  document.getElementById('songArtist').textContent = song.artist;
-  document.getElementById('songTitle').textContent  = song.title;
-  document.getElementById('commentLine').style.background = cfg.hex;
-  document.getElementById('commentText').textContent = song.comment || '이 곡을 들으며 잠시 쉬어가요.';
+  document.getElementById('songArtist').textContent          = song.artist;
+  document.getElementById('songTitle').textContent           = song.title;
+  document.getElementById('commentWrap').style.borderTopColor = cfg.hex;
+  document.getElementById('commentText').textContent         = song.comment || '이 곡을 들으며 잠시 쉬어가요.';
   showStep('step3');
 }
 
 function nextSong() { songOffset++; renderSong(); }
+
+// ── Image save (Canvas) ───────────────────────────────────────
+async function saveAsImage() {
+  if (!currentSong) return;
+  const btn   = document.getElementById('btnSave');
+  const label = document.getElementById('saveLabel');
+  btn.disabled = true;
+  label.textContent = '생성 중...';
+
+  try {
+    const song = currentSong;
+    const cfg  = COLORS[currentColor] || { hex:'#888' };
+    const W = 800, H = 800;
+
+    const canvas = document.createElement('canvas');
+    canvas.width  = W;
+    canvas.height = H;
+    const ctx = canvas.getContext('2d');
+
+    // Background gradient
+    const bgGrad = ctx.createLinearGradient(0, 0, W, H);
+    const r = parseInt(cfg.hex.slice(1,3),16);
+    const g = parseInt(cfg.hex.slice(3,5),16);
+    const b = parseInt(cfg.hex.slice(5,7),16);
+    bgGrad.addColorStop(0, `rgba(${r},${g},${b},0.10)`);
+    bgGrad.addColorStop(1, '#FFFFFF');
+    ctx.fillStyle = bgGrad;
+    ctx.fillRect(0, 0, W, H);
+
+    // Brand
+    ctx.fillStyle   = '#C0C0C0';
+    ctx.font        = 'bold 11px Arial';
+    ctx.textAlign   = 'center';
+    ctx.fillText('SOUND REPUBLICA', W/2, 54);
+
+    // Cover art (320×320, centered, rounded corners)
+    const IS = 320, IX = (W - IS) / 2, IY = 80;
+
+    // shadow behind cover
+    ctx.shadowColor   = 'rgba(0,0,0,0.22)';
+    ctx.shadowBlur    = 30;
+    ctx.shadowOffsetY = 10;
+    ctx.fillStyle     = '#fff';
+    roundRect(ctx, IX, IY, IS, IS, 26);
+    ctx.fill();
+    ctx.shadowColor = 'transparent';
+
+    // clip and draw cover
+    ctx.save();
+    roundRect(ctx, IX, IY, IS, IS, 26);
+    ctx.clip();
+
+    let imgOk = false;
+    if (song.coverUrl) {
+      try {
+        const img = await loadImgCors(song.coverUrl);
+        ctx.drawImage(img, IX, IY, IS, IS);
+        imgOk = true;
+      } catch { /* CORS blocked – use gradient */ }
+    }
+    if (!imgOk) {
+      const fg = ctx.createLinearGradient(IX, IY, IX+IS, IY+IS);
+      fg.addColorStop(0, song.grad[0]);
+      fg.addColorStop(1, song.grad[1]);
+      ctx.fillStyle = fg;
+      ctx.fillRect(IX, IY, IS, IS);
+      ctx.fillStyle = 'rgba(255,255,255,0.75)';
+      ctx.font      = 'bold 100px Arial';
+      ctx.textAlign = 'center';
+      ctx.fillText(song.artist.slice(0,1).toUpperCase(), W/2, IY + IS/2 + 36);
+    }
+    ctx.restore();
+
+    // Artist
+    const metaY = IY + IS + 36;
+    ctx.fillStyle = '#AAAAAA';
+    ctx.font      = '500 14px Arial';
+    ctx.textAlign = 'center';
+    ctx.fillText(song.artist, W/2, metaY);
+
+    // Title
+    ctx.fillStyle = '#111111';
+    ctx.font      = 'bold 30px Arial';
+    ctx.textAlign = 'center';
+    const titleLines = splitLines(ctx, song.title, W - 100);
+    titleLines.forEach((line, i) => ctx.fillText(line, W/2, metaY + 36 + i * 36));
+
+    // Comment
+    const comY = metaY + 36 + titleLines.length * 36 + 18;
+    ctx.fillStyle = '#999999';
+    ctx.font      = '14px Arial';
+    ctx.textAlign = 'center';
+    const comLines = splitLines(ctx, song.comment || '', W - 120);
+    comLines.slice(0,2).forEach((line, i) => ctx.fillText(line, W/2, comY + i * 22));
+
+    // Badge: "[nickname]을 위한 [color]"
+    const badgeText = `${nickname}${nameParticle(nickname)} 위한 ${currentColor}`;
+    ctx.font        = 'bold 13px Arial';
+    const bw        = ctx.measureText(badgeText).width + 32;
+    const bh        = 30;
+    const bx        = W/2 - bw/2;
+    const by        = H - 72;
+    ctx.fillStyle   = cfg.hex;
+    roundRect(ctx, bx, by, bw, bh, bh/2);
+    ctx.fill();
+    ctx.fillStyle   = autoTextColor(cfg.hex);
+    ctx.textAlign   = 'center';
+    ctx.fillText(badgeText, W/2, by + 20);
+
+    // Download
+    const link = document.createElement('a');
+    link.download = `${song.artist} - ${song.title}.png`;
+    link.href     = canvas.toDataURL('image/png');
+    link.click();
+  } catch (err) {
+    console.error(err);
+    alert('이미지 저장에 실패했어요.');
+  } finally {
+    btn.disabled      = false;
+    label.textContent = '이미지로 저장';
+  }
+}
+
+function loadImgCors(src) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.onload  = () => resolve(img);
+    img.onerror = reject;
+    img.src = src + (src.includes('?') ? '&' : '?') + '_nocache=' + Date.now();
+    setTimeout(reject, 4000);
+  });
+}
+
+function roundRect(ctx, x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.lineTo(x + w - r, y);
+  ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+  ctx.lineTo(x + w, y + h - r);
+  ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+  ctx.lineTo(x + r, y + h);
+  ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+  ctx.lineTo(x, y + r);
+  ctx.quadraticCurveTo(x, y, x + r, y);
+  ctx.closePath();
+}
+
+function splitLines(ctx, text, maxWidth) {
+  if (!text) return [];
+  const chars = [...text];
+  const lines = [];
+  let cur = '';
+  for (const ch of chars) {
+    if (ctx.measureText(cur + ch).width > maxWidth && cur) {
+      lines.push(cur);
+      cur = ch;
+    } else {
+      cur += ch;
+    }
+  }
+  if (cur) lines.push(cur);
+  return lines;
+}
 
 // ── Helpers ───────────────────────────────────────────────────
 function hash(s) {
@@ -428,16 +701,19 @@ function hash(s) {
   for (let i = 0; i < s.length; i++) h = Math.imul(31, h) + s.charCodeAt(i) | 0;
   return Math.abs(h);
 }
-function today() { const d=new Date(); return `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`; }
+function today() {
+  const d = new Date();
+  return `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
+}
 function particle(n) {
   const c = n[n.length-1].charCodeAt(0);
   if (c < 0xAC00 || c > 0xD7A3) return '야';
-  return (c-0xAC00)%28===0 ? '야' : '이야';
+  return (c-0xAC00) % 28 === 0 ? '야' : '이야';
 }
 function nameParticle(n) {
   const c = n[n.length-1].charCodeAt(0);
   if (c < 0xAC00 || c > 0xD7A3) return '을/를';
-  return (c-0xAC00)%28===0 ? '를' : '을';
+  return (c-0xAC00) % 28 === 0 ? '를' : '을';
 }
 function setTheme(hex, bg) {
   document.documentElement.style.setProperty('--accent', hex);
